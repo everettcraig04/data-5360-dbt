@@ -12,12 +12,12 @@ d.order_date,
 e.first_name as employee_first_name,
 e.last_name as employee_last_name,
 s.store_name,
-p.product_name
-ol.unitprice,
-ol.quantity
+p.product_name,
+f.unit_price,
+f.quantity
 FROM {{ ref('fact_sales') }} f
-LEFT JOIN {{ ref('oliver_dim_customer') }} c ON c.customer_id = o.customer_id
-LEFT JOIN {{ ref('oliver_dim_date') }} d ON d.order_date = o.order_date
-LEFT JOIN {{ ref('oliver_dim_employee') }} e ON e.employee_id = o.employee_id
-LEFT JOIN {{ ref('oliver_dim_product') }} p ON p.product_id = ol.product_id
-LEFT JOIN {{ ref('oliver_dim_store') }} s ON s.store_id = o.store_id
+LEFT JOIN {{ ref('oliver_dim_customer') }} c ON c.customer_key = f.customer_key
+LEFT JOIN {{ ref('oliver_dim_date') }} d ON d.date_key = f.date_key
+LEFT JOIN {{ ref('oliver_dim_employee') }} e ON e.employee_key = f.employee_key
+LEFT JOIN {{ ref('oliver_dim_product') }} p ON p.productkey = f.productkey
+LEFT JOIN {{ ref('oliver_dim_store') }} s ON s.storekey = f.storekey
